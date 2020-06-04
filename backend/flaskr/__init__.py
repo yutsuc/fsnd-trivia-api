@@ -46,9 +46,6 @@ def create_app(test_config=None):
     def retrieve_categories():
         categories = get_categories_as_dictionary()
 
-        if len(categories) == 0:
-            abort(404, "No Categories were found")
-
         return jsonify({
             "success": True,
             "categories": categories
