@@ -99,13 +99,19 @@ def create_app(test_config=None):
   '''
 
     '''
-  @TODO: 
-  Create a GET endpoint to get questions based on category. 
+    @TODO: 
+    Create a GET endpoint to get questions based on category. 
 
-  TEST: In the "List" tab / main screen, clicking on one of the 
-  categories in the left column will cause only questions of that 
-  category to be shown. 
-  '''
+    TEST: In the "List" tab / main screen, clicking on one of the 
+    categories in the left column will cause only questions of that 
+    category to be shown. 
+    '''
+    # @app.route("/api/categories/<int:category_id>/questions")
+    # def get_questions_by_category(category_id):
+    #     return jsonify({
+    #         "success": True
+    #     })
+
     '''
   @TODO: 
   Create a POST endpoint to get questions to play the quiz. 
@@ -128,7 +134,7 @@ def create_app(test_config=None):
         return jsonify({
             "success": False,
             "error": 404,
-            "message": str(error)
+            "message": "Not Found"
         }), 404
 
     return app

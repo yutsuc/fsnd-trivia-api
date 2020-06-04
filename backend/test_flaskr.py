@@ -29,22 +29,43 @@ class TriviaTestCase(unittest.TestCase):
         """Executed after reach test"""
         pass
 
-    def test_retrieve_all_categories(self):
+    def test_retrieve_categories(self):
         res = self.client().get("/api/categories")
         data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertTrue(data["categories"])
     
-    def test_retrieve_all_questions(self):
+    def test_retrieve_questions(self):
         res = self.client().get("/api/questions")
         data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertTrue(data["questions"])
         self.assertEqual(data["total_questions"], 19)
         self.assertTrue(data["categories"])
         self.assertEqual(data["current_category"], "ALL")
+
+    def test_get_questions_by_category(self):
+        res = self.client().get("/api/categories/1/questions")
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"], True)
+        self.assertTrue(data["questions"])
+        self.assertEqual(data["total_questions"], 3)
+        self.assertEqual(data["current_category"], "Science")
+
+    def test_404_if_category_not_found(self):
+        res = self.client().get("/api/categories/1000/questions")
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Not Found")
+
 
 
 # Make the tests conveniently executable
