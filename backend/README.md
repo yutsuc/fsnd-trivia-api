@@ -67,7 +67,9 @@ python test_flaskr.py
 * Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 * Request Arguments: None
 * Returns: 
+    
     success: Boolean value indicating the request was successful
+    
     categories: An object with a single key, categories, that contains a object of id: category_string key:value pairs
 ```
 {
@@ -86,12 +88,18 @@ python test_flaskr.py
 ### GET `"/api/questions"`
 * Fetches all questions, including pagination (every 10 questions)
 * Request Arguments:
+    
     page: Integer indicating the range of questions to get
 * Returns: 
+    
     success: Boolean value indicating the request was successful
+    
     questions: A collection of questions (max 10)
+    
     total_questions: An Integer indication total number of questions
+    
     categories: An object with a single key, categories, that contains a object of id: category_string key:value pairs
+    
     current_category: An empty object indicating that current category is not specified
 ```
 {
@@ -134,9 +142,13 @@ python test_flaskr.py
 ##### Create a new question
 * Request Arguments: None
 * Request Body:
+    
     question: String value of the question
+    
     answer: String value of the answer
+    
     difficulty: String value inidicating the question's difficulty
+    
     category: String value indidcating the category this question belongs to
 ```
 {
@@ -147,6 +159,7 @@ python test_flaskr.py
 }
 ```
 - Returns: 
+    
     success: Boolean value indicating the request was successful
 ```
 {
@@ -157,6 +170,7 @@ python test_flaskr.py
 #####  Get questions based on a search term (case insensitive)
 * Request Arguments: None
 * Request Body:
+    
     searchTerm: Case insensitive string value to search for
 ```
 {
@@ -164,9 +178,13 @@ python test_flaskr.py
 }
 ```
 * Returns: 
+    
     success: Boolean value indicating the request was successful
+    
     current_category: An empty object indicating that it's searching across all categories
+    
     questions: A collection of questions
+    
     total_questions: An Integer indication total number of questions
 ```
 {
@@ -196,9 +214,13 @@ python test_flaskr.py
     page: Integer indicating the range of questions to get
 * Request variable: Integer value indicating the category ID
 * Returns: 
+    
     success: Boolean value indicating the request was successful
+    
     questions: A collection of questions (max 10)
+    
     total_questions: An Integer indication total number of questions
+    
     current_category: A Category object indicating the current category
 ```
 {
@@ -223,6 +245,7 @@ python test_flaskr.py
 * Request Arguments: None
 * Request variable: Integer value indicating the question ID
 * Returns: 
+
     success: Boolean value indicating the request was successful
 ```
 {
@@ -234,7 +257,9 @@ python test_flaskr.py
 * Fetch questions in a category to play the quiz
 * Request Arguments: None
 * Request Body:
+
     previous_questions: A collection of question IDs that have been answered
+    
     quiz_category: A Category object indicating the current category
 ```
 {
@@ -247,9 +272,10 @@ python test_flaskr.py
 ```
 
 * Returns:
-    success: Boolean value indicating the request was successful
-    question: A question to be answered
 
+    success: Boolean value indicating the request was successful
+    
+    question: A question to be answered
 ```
 {
     "success": true,
