@@ -70,20 +70,6 @@ def create_app(test_config=None):
         })
 
     '''
-    DELETE requests to remove a question
-    '''
-    @app.route("/api/questions/<int:question_id>", methods=["DELETE"])
-    def delete_question(question_id):
-        try:
-            question = Question.query.get(question_id)
-            question.delete()
-            return jsonify({
-                "success": True
-            })
-        except:
-            abort(422)
-
-    '''
     POST request to create a new question or get questions based on a search term.
     It should return any questions for whom the search term
     is a substring of the question.
@@ -137,6 +123,20 @@ def create_app(test_config=None):
             "total_questions": len(questions),
             "current_category": category.format()
         })
+
+    '''
+    DELETE requests to remove a question
+    '''
+    @app.route("/api/questions/<int:question_id>", methods=["DELETE"])
+    def delete_question(question_id):
+        try:
+            question = Question.query.get(question_id)
+            question.delete()
+            return jsonify({
+                "success": True
+            })
+        except:
+            abort(422)
 
     '''
     POST requests to get questions to play the quiz.
