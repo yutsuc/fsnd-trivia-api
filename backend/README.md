@@ -63,6 +63,23 @@ python test_flaskr.py
 ```
 
 ## API Reference
+### Getting Started
+The backend app is hosted at the default URL `http://127.0.0.1:5000`
+
+### Error Handling
+Errors are returned as JSON object in the following format
+```
+{
+    "success": False,
+    "error": 400,
+    "message": "Bad Request"
+}
+```
+The API will return three error types when the requests fail
+* 400 Bad Request
+* 404 Not Found
+* 422 Unprocessable
+
 ### GET `"/api/categories"`
 * Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 * Request Arguments: None
