@@ -76,12 +76,13 @@ python test_flaskr.py
 ```
 
 ## API Reference
-### GET "/api/categories"
+### GET `"/api/categories"`
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
 - Returns: 
     success: Boolean value indicating the request was successful
     categories: An object with a single key, categories, that contains a object of id: category_string key:value pairs
+```
 {
     "success": True,
     "categories": {
@@ -93,8 +94,9 @@ python test_flaskr.py
         "6" : "Sports"
     }
 }
+```
 
-### GET "/api/questions"
+### GET `"/api/questions"`
 - Fetches all questions, including pagination (every 10 questions)
 - Request Arguments:
     page: Integer indicating the range of questions to get
@@ -104,6 +106,7 @@ python test_flaskr.py
     total_questions: An Integer indication total number of questions
     categories: An object with a single key, categories, that contains a object of id: category_string key:value pairs
     current_category: An empty object indicating that current category is not specified
+```
 {
     "success": True,
     "questions": [{
@@ -138,8 +141,9 @@ python test_flaskr.py
     },
     "current_category": {}
 }
+```
 
-### POST "/api/questions"
+### POST `"/api/questions"`
 ##### Create a new question
 - Request Arguments: None
 - Request Body:
@@ -147,30 +151,37 @@ python test_flaskr.py
     answer: String value of the answer
     difficulty: String value inidicating the question's difficulty
     category: String value indidcating the category this question belongs to
+```
 {
     "question": "Who discovered gravity?",
     "answer": "Newton",
     "difficulty": "3",
     "category": "1",
 }
+```
 - Returns: 
     success: Boolean value indicating the request was successful
+```
 {
     "success": True
 }
+```
 
 #####  Get questions based on a search term (case insensitive)
 - Request Arguments: None
 - Request Body:
     searchTerm: Case insensitive string value to search for
+```
 {
     "searchTerm": "title"
 }
+```
 - Returns: 
     success: Boolean value indicating the request was successful
     current_category: An empty object indicating that it's searching across all categories
     questions: A collection of questions
     total_questions: An Integer indication total number of questions
+```
 {
     "success": True,
     "current_category": {}, 
@@ -190,8 +201,9 @@ python test_flaskr.py
     }], 
     "total_questions": 2
 }
+```
 
-### GET "/api/categories/<int:category_id>/questions"
+### GET `"/api/categories/<int:category_id>/questions"`
 - Fetches all questions in the given category, including pagination (every 10 questions)
 - Request Arguments:
     page: Integer indicating the range of questions to get
@@ -201,6 +213,7 @@ python test_flaskr.py
     questions: A collection of questions (max 10)
     total_questions: An Integer indication total number of questions
     current_category: A Category object indicating the current category
+```
 {
     "success": True,
     "questions": [{
@@ -216,23 +229,27 @@ python test_flaskr.py
         "type": "Science"
     }
 }
+```
 
-### DELETE "/api/questions/<int:question_id>"
+### DELETE `"/api/questions/<int:question_id>"`
 - Removes the given question from the database
 - Request Arguments: None
 - Request variable: Integer value indicating the question ID
 - Returns: 
     success: Boolean value indicating the request was successful
+```
 {
     "success": True,
 }
+```
 
-### POST "/api/quizzes"
+### POST `"/api/quizzes"`
 - Fetch questions in a category to play the quiz
 - Request Arguments: None
 - Request Body:
     previous_questions: A collection of question IDs that have been answered
     quiz_category: A Category object indicating the current category
+```
 {
     "previous_questions": [22],
     "quiz_category": {
@@ -240,9 +257,13 @@ python test_flaskr.py
         "type": "Science"
     }
 }
+```
 - Returns: 
-    success: Boolean value indicating the request was successful
-    question: A question to be answered
+success
+: Boolean value indicating the request was successful
+question
+: A question to be answered
+```
 {
     "success": true,
     "question": {
@@ -253,3 +274,4 @@ python test_flaskr.py
         "difficulty": 3        
     }
 }
+```
