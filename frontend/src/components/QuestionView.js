@@ -43,7 +43,12 @@ class QuestionView extends Component {
   }
 
   selectPage(num) {
-    this.setState({page: num}, () => this.getQuestions());
+    this.setState({page: num}, () => {
+      if (this.state.currentCategory.id)
+        return this.getByCategory(this.state.currentCategory.id)
+      else 
+        return this.getQuestions()
+    });
   }
 
   createPagination(){
@@ -60,9 +65,13 @@ class QuestionView extends Component {
     return pageNumbers;
   }
 
-  getByCategory= (id) => {
+  getByCategory= (id, page) => {
+    if (page === 1)
+      this.setState({page: 1})
+    else
+      page = this.state.page
     $.ajax({
-      url: `${api_uri}/categories/${id}/questions`,
+      url: `${api_uri}/categories/${id}/questions?page=${page}`,
       type: "GET",
       success: (result) => {
         this.setState({
@@ -128,7 +137,7 @@ class QuestionView extends Component {
           <h2 onClick={() => {this.getQuestions()}}>Categories</h2>
           <ul>
             {Object.keys(this.state.categories).map((id, ) => (
-              <li key={id} onClick={() => {this.getByCategory(id)}}>
+              <li key={id} onClick={() => {this.getByCategory(id, 1)}}>
                 {this.state.categories[id]}
                 <img className="category" src={`${this.state.categories[id]}.svg`}/>
               </li>
