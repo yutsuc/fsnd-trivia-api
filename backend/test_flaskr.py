@@ -26,6 +26,13 @@ class TriviaTestCase(unittest.TestCase):
             "category": 1
         }
 
+        self.invalid_new_question = {
+            "question": "Who discovered gravity?",
+            "answer": "Newton",
+            "difficulty": "Three",
+            "category": 1
+        }
+
         self.quiz_with_valid_category = {
             "quiz_category": {"id": 1, "type": "Science"},
             "previous_questions": [20]
@@ -43,6 +50,10 @@ class TriviaTestCase(unittest.TestCase):
 
         self.search_term = {
             "searchTerm": "title"
+        }
+
+        self.empty_search_term = {
+            "searchTerm": ""
         }
 
         # binds the app to the current context
@@ -85,6 +96,15 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["success"], True)
         self.assertEqual(count_before + 1, count_after)
 
+    def test_422_if_create_new_question_with_invalid_input(self):
+        count_before = Question.query.count()
+        res = self.client().post("/api/questions", json=self.invalid_new_question)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Unprocessable")
+
     def test_search_questions(self):
         res = self.client().post("/api/questions", json=self.search_term)
         data = json.loads(res.data)
@@ -94,6 +114,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data["questions"])
         self.assertEqual(data["total_questions"], 2)
         self.assertEqual(data["current_category"], {})
+
+    def test_400_if_search_term_is_empty(self):
+        res = self.client().post("/api/questions", json=self.empty_search_term)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Bad Request")
 
     def test_get_questions_by_category(self):
         res = self.client().get("/api/categories/1/questions")
@@ -142,7 +170,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_get_quiz_without_category(self):
         res = self.client().post("/api/quizzes", json=self.quiz_without_category)
         data = json.loads(res.data)
-        previous_questions = self.quiz_with_valid_category["previous_questions"]
+        previous_questions = self.quiz_without_category["previous_questions"]
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)

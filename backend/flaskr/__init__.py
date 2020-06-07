@@ -78,14 +78,14 @@ def create_app(test_config=None):
     @app.route("/api/questions", methods=["POST"])
     def create_new_question():
         req = request.get_json()
-        question = req.get("question")
-        answer = req.get("answer")
-        difficulty = req.get("difficulty")
-        category = req.get("category")
         search_term = req.get("searchTerm", None)
 
         if search_term is None:
             try:
+                question = req.get("question")
+                answer = req.get("answer")
+                difficulty = int(req.get("difficulty"))
+                category = req.get("category")
                 new_question = Question(question, answer, category, difficulty)
                 new_question.insert()
 
@@ -96,6 +96,9 @@ def create_app(test_config=None):
             except:
                 abort(422)
         else:
+            if search_term == "":
+                abort(400)
+
             questions = Question.query.filter(
                 Question.question.ilike(f"%{search_term}%")).all()
             formatted_questions = [
