@@ -79,6 +79,7 @@ The API will return three error types when the requests fail
 * 400 Bad Request
 * 404 Not Found
 * 422 Unprocessable
+* 500 Internal Server Error
 
 ### GET `"/api/categories"`
 * Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
