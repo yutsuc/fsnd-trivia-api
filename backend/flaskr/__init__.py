@@ -58,7 +58,8 @@ def create_app(test_config=None):
     @app.route("/api/questions")
     def retrieve_questions():
         questions = Question.query.order_by("id").all()
-        formatted_questions = [question.format() for question in get_paginated_results(questions, request)]
+        formatted_questions = [
+            question.format() for question in get_paginated_results(questions, request)]
         categories = get_categories_as_dictionary()
 
         return jsonify({
@@ -87,16 +88,18 @@ def create_app(test_config=None):
             try:
                 new_question = Question(question, answer, category, difficulty)
                 new_question.insert()
-                
+
                 return jsonify({
                     "success": True
                 })
-                
+
             except:
                 abort(422)
         else:
-            questions = Question.query.filter(Question.question.ilike(f"%{search_term}%")).all()
-            formatted_questions = [question.format() for question in get_paginated_results(questions, request)]
+            questions = Question.query.filter(
+                Question.question.ilike(f"%{search_term}%")).all()
+            formatted_questions = [
+                question.format() for question in get_paginated_results(questions, request)]
             return jsonify({
                 "success": True,
                 "questions": formatted_questions,
@@ -114,8 +117,10 @@ def create_app(test_config=None):
         if category is None:
             abort(404)
 
-        questions = Question.query.filter(Question.category == category_id).order_by("id").all()
-        formatted_questions = [question.format() for question in get_paginated_results(questions, request)]
+        questions = Question.query.filter(
+            Question.category == category_id).order_by("id").all()
+        formatted_questions = [
+            question.format() for question in get_paginated_results(questions, request)]
 
         return jsonify({
             "success": True,
@@ -148,19 +153,21 @@ def create_app(test_config=None):
         previous_questions = req["previous_questions"]
 
         if category_id == 0:
-            questions = Question.query.filter(~Question.id.in_(previous_questions)).all()
+            questions = Question.query.filter(
+                ~Question.id.in_(previous_questions)).all()
         else:
             category = Category.query.get(category_id)
             if category is None:
                 abort(400)
-            questions = Question.query.filter(Question.category == category_id, ~Question.id.in_(previous_questions)).all()
-        
+            questions = Question.query.filter(
+                Question.category == category_id, ~Question.id.in_(previous_questions)).all()
+
         if len(questions) == 0:
             return jsonify({
                 "success": True
             })
         else:
-            question_index = random.randrange(len(questions))        
+            question_index = random.randrange(len(questions))
             return jsonify({
                 "success": True,
                 "question": questions[question_index].format()
