@@ -264,9 +264,12 @@ The API will return three error types when the requests fail
 * Returns: 
 
     success: Boolean value indicating the request was successful
+
+    question_id: ID of the question deleted
 ```
 {
     "success": True,
+    "question_id": 10
 }
 ```
 
